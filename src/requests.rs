@@ -1,9 +1,19 @@
 use serde::Deserialize;
+use std::ops::Add;
 
 #[derive(Deserialize, PartialEq, Eq, Debug, Copy, Clone)]
 pub struct Point {
     pub x: i32,
     pub y: i32,
+}
+impl Add for Point {
+    type Output = Self;
+    fn add(self, other: Self) -> Self {
+        Self {
+            x: self.x + other.x,
+            y: self.y + other.y,
+        }
+    }
 }
 
 #[derive(Deserialize, PartialEq, Eq, Debug)]
@@ -138,7 +148,7 @@ mod test {
             head: Point { x: 0, y: 0 },
             length: 3,
             shout: "why are we shouting??".to_string(),
-            squad: "".to_string(),
+            squad: Some("".to_string()),
         };
 
         let snake = Snake {
@@ -155,7 +165,7 @@ mod test {
             head: Point { x: 5, y: 4 },
             latency: "222".to_string(),
             shout: "I'm not really sure...".to_string(),
-            squad: "".to_string(),
+            squad: Some("".to_string()),
         };
 
         let board = Board {

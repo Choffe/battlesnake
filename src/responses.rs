@@ -3,7 +3,7 @@ use serde::{Deserialize, Serialize};
 #[derive(Serialize, Debug)]
 pub struct Info {
     pub apiversion: String,
-    #[serde(skip_serializing_if = "Option::is_none")]    
+    #[serde(skip_serializing_if = "Option::is_none")]
     pub author: Option<String>,
     #[serde(skip_serializing_if = "Option::is_none")]
     pub color: Option<String>,
@@ -85,11 +85,14 @@ pub struct Move {
 
 impl Move {
     pub fn new(movement: Movement) -> Move {
-        Move { movement , shout: None }
+        Move {
+            movement,
+            shout: None,
+        }
     }
 }
 
-#[derive(Serialize, Deserialize, PartialEq, Eq, Debug)]
+#[derive(Serialize, Deserialize, PartialEq, Eq, Debug, Copy, Clone)]
 #[serde(rename_all(serialize = "lowercase", deserialize = "lowercase"))]
 pub enum Movement {
     Right,
@@ -130,7 +133,7 @@ mod test {
     fn serialize_move() {
         let response = Move {
             movement: Movement::Right,
-            shout: None
+            shout: None,
         };
 
         let correct_serialized_response = "{\"move\":\"right\"}";
